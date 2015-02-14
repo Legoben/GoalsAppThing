@@ -1,9 +1,9 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="co.helloben.goals" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
-    <name>Goals App</name>
+    <name>PING</name>
     <description>
-        Hello World sample application that responds to the deviceready event.
+        websockets are great
     </description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team

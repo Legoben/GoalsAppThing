@@ -6,18 +6,121 @@ body {
     -webkit-touch-callout: none;
     -webkit-text-size-adjust: none;
     -webkit-user-select: none;
-
-    height: 100%;
 }
 
+/* the fucking navbar */
 nav {
+    margin-bottom: 5px !important;
     padding-top: 20px;
-    margin-bottom: 0 !important;
+}
+
+.navbar-brand {
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 15pt;
+}
+
+/* make the font-related markup tags actually work */
+strong {
+    font-family: "robotomedium";
+}
+
+h1, h2, h3 {
+    font-family: 'robotobold' !important;
+    color: #f00 !important;
+}
+
+/* intro paragraph */
+.intro p:first-child {
+    text-align: center;
+
+    font-size: 1.85em;
+    line-height: 1.9em;
+
+    margin-bottom: 0.33em !important;
+}
+
+.intro p:first-child span {
+    font-family: "robotothin";
+
+    text-transform: uppercase;
+
+    font-size: 2em;
+    line-height: 1em;
+}
+
+.intro p:first-child span:before {
+    content: '\A';
+    white-space: pre;
+}
+
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    .intro p:first-child {
+        font-size: 2.5em;
+    }
 }
 
 /* fuck it ship text-indent: */
 
 /* fonts */
+@font-face {
+    font-family: 'robotothin';
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Thin-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Thin-webfont.svg#robotothin') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotolight';
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Light-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Light-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Light-webfont.svg#robotolight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotoregular';
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Regular-webfont.svg#robotoregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'roboto_condensedregular';
+    src: url('../fonts/roboto/RobotoCondensed-Regular-webfont.eot');
+    src: url('../fonts/roboto/RobotoCondensed-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/RobotoCondensed-Regular-webfont.woff') format('woff'),
+         url('../fonts/roboto/RobotoCondensed-Regular-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/RobotoCondensed-Regular-webfont.svg#roboto_condensedregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'robotomedium';
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot');
+    src: url('../fonts/roboto/Roboto-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.woff') format('woff'),
+         url('../fonts/roboto/Roboto-Medium-webfont.ttf') format('truetype'),
+         url('../fonts/roboto/Roboto-Medium-webfont.svg#robotomedium') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
 @font-face {
     font-family: 'robotobold';
     src: url('../fonts/roboto/Roboto-Bold-webfont.eot');
@@ -27,6 +130,4 @@ nav {
          url('../fonts/roboto/Roboto-Bold-webfont.svg#robotobold') format('svg');
     font-weight: normal;
     font-style: normal;
-
 }
-
