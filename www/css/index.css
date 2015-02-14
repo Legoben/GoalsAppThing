@@ -8,9 +8,25 @@ body {
     -webkit-user-select: none;
 }
 
+* {
+    font-size: 14pt;
+}
+
+/* general */
+.float-right {
+    float: right;
+}
+
+/* ipads are fucking stupid */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
+    body {
+        overflow: hidden;
+    }
+}
+
 /* the fucking navbar */
 nav {
-    margin-bottom: 5px !important;
+    margin-bottom: 0 !important;
     padding-top: 20px;
 }
 
@@ -18,8 +34,52 @@ nav {
     text-transform: uppercase;
 }
 
-p {
-    font-size: 15pt;
+/* loading overlay */
+.loader {
+    z-index: 999999999;
+
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+    background: rgba(0, 0, 0, 0.70);
+}
+
+.loader .spinner {
+    margin-top: 5px;
+
+    text-align: center;
+    display: table;
+
+    height: 100%;
+    width: 100%;
+}
+
+.loader .spinner .content {
+    display: table-cell;
+
+    vertical-align: middle;
+}
+
+.loader p {
+    color: #fff;
+
+    font-family: 'robotobold' !important;
+    font-size: 2.1em;
+
+    text-shadow: 0 1px 0 #ccc, 
+               0 2px 0 #c9c9c9,
+               0 3px 0 #bbb,
+               0 4px 0 #b9b9b9,
+               0 5px 0 #aaa,
+               0 6px 1px rgba(0,0,0,.1),
+               0 0 5px rgba(0,0,0,.1),
+               0 1px 3px rgba(0,0,0,.3),
+               0 3px 5px rgba(0,0,0,.2),
+               0 5px 10px rgba(0,0,0,.25),
+               0 10px 10px rgba(0,0,0,.2),
+               0 20px 20px rgba(0,0,0,.15);
+
+    margin-bottom: 5px;
 }
 
 /* make the font-related markup tags actually work */
@@ -27,9 +87,21 @@ strong {
     font-family: "robotomedium";
 }
 
-h1, h2, h3 {
+h1, h2 {
     font-family: 'robotobold' !important;
-    color: #f00 !important;
+}
+
+h3 {
+    font-family: 'robotomedium' !important;
+}
+
+/* margin below a row */
+.container .row {
+    margin-bottom: 1.5em;
+}
+
+.container .row:last-child {
+    margin-bottom: 0 !important;
 }
 
 /* intro paragraph */
@@ -60,6 +132,11 @@ h1, h2, h3 {
     .intro p:first-child {
         font-size: 2.5em;
     }
+}
+
+/* join dialogue */
+.join {
+    display: none;
 }
 
 /* fuck it ship text-indent: */
