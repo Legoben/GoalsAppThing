@@ -4,7 +4,7 @@ import random
 from math import sin, cos, acos, asin, sqrt, atan
 import json
 
-colors = ["#7FDBFF","#0074D9", "#01FF70", "#001F3F","#39CCCC","#3D9970", "#2ECC40", "#FF4136", "#85144B",  "#FF851B","#B10DC9", "#FFDC00", "#F012BE", "#aaa", "#fff"]
+colors = ["#7FDBFF","#0074D9", "#01FF70", "#001F3F","#39CCCC","#3D9970", "#2ECC40", "#FF4136", "#85144B",  "#FF851B","#B10DC9", "#FFDC00", "#F012BE", "#aaa"]
 
 print("reboot")
 
@@ -38,7 +38,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
             print("MAKE GAME")
             id = id_generator()
             p = gen_player(self)
-            games[id] = {"players" : [p]}
+            games[id] = {"players": [p]}
 
 
             self.write_message(json.dumps({"event":"youjoin", "data":{"gameid":id, "players": sendable_p(id), "youid":0}}))
@@ -74,18 +74,21 @@ class WebSocketHandler(websocket.WebSocketHandler):
             lat = games[gid]['players'][pid]['currloc']['lat']
             lon = games[gid]['players'][pid]['currloc']['lon']
 
+            print(lon,lat)
             dists = []
 
             for p in games[gid]['players']:
-                if p['pid'] == pid or p['curloc'] == None:
+                if p['currloc'] == None:
                     dists.append(None)
                     continue
+                if p['pid'] == pid:
+                    ll = {"lat":p['currloc']['lat'], "lon":p['currloc']['lon'], "you":True}
+                else:
+                    ll = {"lat":p['currloc']['lat'], "lon":p['currloc']['lon'], "you":False}
 
-                tdist = dist(lat,lon, p['currloc']['lat'], p['currloc']['lon'])
 
-                print(tdist)
 
-                dists.append(tdist)
+                dists.append(ll)
 
             self.write_message(json.dumps({"event":"dopong", "data":{"dists":dists}}))
             print(games[gid])
