@@ -33,7 +33,7 @@
 
                         <li><a href="index.html">Home</a></li>
                         <li><a href="#" onclick="return false" data-toggle="modal" data-target="#chatmodal">Chat (<span id="newchat">0</span>)</a></li>
-                        <li><a href="#">Config</a></li>
+                        <li><a href="#" onclick="return false" data-toggle="modal" data-target="#configmodal">Config</a></li>
                         
                     </ul>
                 </div>
@@ -117,6 +117,26 @@
                       <button class="btn btn-default" type="button" onclick="sendMessage()" id="chatbtn">Send!</button>
                     </span>
                   </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="modal fade" id="configmodal" tabindex="-1" role="dialog" aria-labelledby="configmodalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="configmodalLabel">Config</h4>
+              </div>
+              <div class="modal-body ">
+                  <!-- ADD SETTINGS HERE -->  
+                  
+                  
+                  ...
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
