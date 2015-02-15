@@ -38,6 +38,9 @@ ws.onmessage = function (event) {
     
     var e = j.event;
     if(e == "dopong") {
+        for(i = 0; i < players.length; i++){
+            players[i].distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, j.data.dists[i].lat, j.data.dists[i].lon) 
+        }
 
     } else if(e == "youjoin") {
         // Do Thing
@@ -73,18 +76,14 @@ function updatePlayerList() {
     for(i = 0; i < players.length; i++) {
         var player = players[i];
 
-        // calculate the distance from us pls
-        var distances = findDistance(player.lat, player.lon, 
-            lastLocation.coords.latitude, lastLocation.coords.longitude);
-
         // render differently if this is the current player or nah
         if(i == myid) {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + distances.km * 1000 + 'm</span>';
+            s += '<span class="badge">' + player.distance + 'm</span>';
             s += '<span style="color:' + player.color + '">' + player.name+' (you)</span></li>';
         } else {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + distances.km * 1000 + 'm</span>';
+            s += '<span class="badge">' + player.distance + 'm</span>';
             s += '<span style="color:' + player.color + '">' + player.name+'</span></li>';
         }
         
