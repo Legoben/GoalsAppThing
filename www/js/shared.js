@@ -71,14 +71,15 @@ function hideLoader() {
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-var Rm = 3961; // mean radius of the earth (miles) at 39 degrees from the equator
-var Rk = 6373; // mean radius of the earth (km) at 39 degrees from the equator
     
 /* main function */
 function findDistance(inlat1, inlng1, inlat2, inlng2) {
-    var t1, n1, t2, n2, lat1, lon1, lat2, lon2, dlat, dlon, a, c, dm, dk, mi, km;
+    var lat1, lon1, lat2, lon2, dlat, dlon, a, c, dm, dk, mi, km;
     
+    // Defined radius of Earth (miles and km) at 39° from equator
+    var Rm = 3961; 
+    var Rk = 6373;
+
     // hide a bunch of functions
     var helpers = {
         // convert degrees to radians
@@ -105,8 +106,8 @@ function findDistance(inlat1, inlng1, inlat2, inlng2) {
     // here's the heavy lifting
     a  = Math.pow(Math.sin(dlat/2),2) + Math.cos(lat1) * Math.cos(lat2) * Math.pow(Math.sin(dlon/2),2);
     c  = 2 * Math.atan2(Math.sqrt(a),Math.sqrt(1-a)); // great circle distance in radians
-    dm = c * Rm; // great circle distance in miles
-    dk = c * Rk; // great circle distance in km
+    dm = c * Rm;
+    dk = c * Rk;
     
     // round the results down to the nearest 1/1000
     mi = helpers.round(dm);
@@ -115,6 +116,6 @@ function findDistance(inlat1, inlng1, inlat2, inlng2) {
     // display the result
     return {
         "mi": mi,
-        "km": km;
+        "km": km
     };
 }

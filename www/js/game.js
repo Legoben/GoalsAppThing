@@ -25,13 +25,15 @@ if(getUrlVars()['rid'] != ''){
 var players = [];
 var myid = null;
 
+// cache the last location
+var lastLocation = null;
+
 // message handler
 ws.onmessage = function (event) {
     var j = JSON.parse(event.data);
     console.log(j);
     
     var e = j.event;
-    
     if(e == "dopong") {
         // Do Thing
         myid = j.data.youid;
@@ -64,11 +66,21 @@ function updatePlayerList() {
 
     // render all players
     for(i = 0; i < players.length; i++) {
+        var player = players[i];
+
+        // calculate the distance from us pls
+        var distances = findDistance(player.lat, player.lon, 
+            lastLocation.coords.latitude, lastLocation.coords.longitude);
+
         // render differently if this is the current player or nah
         if(i == myid) {
-            var s = '<li class="list-group-item" data-pid="' + players[i].pid + '"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+' (you)</span></li>'
+            var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
+            s += '<span class="badge">' + distances.km * 1000 + 'm</span>';
+            s += '<span style="color:' + player.color + '">' + player.name+' (you)</span></li>';
         } else {
-            var s = '<li class="list-group-item" data-pid="' + players[i].pid + '"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+'</span></li>'   
+            var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
+            s += '<span class="badge">' + distances.km * 1000 + 'm</span>';
+            s += '<span style="color:' + player.color + '">' + player.name+'</span></li>';
         }
         
         // append to list
@@ -94,6 +106,7 @@ $(document).unload(function() {
 function locationUpdated(position) {
     console.log(position);
 
+    // Send our location
     ws.send(JSON.stringify({
         event: "updateloc",
         data: {
@@ -113,6 +126,9 @@ function locationUpdated(position) {
         }, 
         gid: gid
     }));
+
+    // cache the location
+    lastLocation = position;
 
     // Update the debug information
     $(".game #debug-pos").html("(" + position.coords.latitude + ", " + position.coords.longitude + ")");
