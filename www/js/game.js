@@ -6,6 +6,22 @@ function getUrlVars() {
 	return vars;
 }
 
+function playAudio(url) {
+    // Play the audio file at url
+    var my_media = new Media(url,
+        // success callback
+        function () {
+            console.log("playAudio():Audio Success");
+        },
+        // error callback
+        function (err) {
+            console.log("playAudio():Audio Error: " + err);
+        }
+    );
+    // Play audio
+    my_media.play();
+}
+
 // SFX
 var audioFiles = [
     [
@@ -53,14 +69,15 @@ function playPong(distance, callback) {
     //if (device.platform == 'Android') {
     //    audio.src = '/android_asset/www/' + audioFiles[potato][index];
     //} else {
-        audio.src = 'http://ping.helloben.co/' + audioFiles[potato][index];
+        //audio.src = 'http://ping.helloben.co/' + audioFiles[potato][index];
     //}
 
-    audio.play();
+    playAudio('http://ping.helloben.co/' + audioFiles[potato][index])
+    //audio.play();
     
-    audio.addEventListener("ended", function() {
-        callback();
-    });
+    //audio.addEventListener("ended", function() {
+    //    callback();
+    //});
 }
 
 // Determine if this is a new game or should be resumed
