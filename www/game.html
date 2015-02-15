@@ -49,9 +49,13 @@
         </nav>
 
         <div class="container">
-            <!-- ping button -->
+            <!-- ping button and alerts -->
             <div class="row">
                 <div class="col-sm-12 ping">
+                    <div class="alert alert-danger alert-location-invalid" role="alert">
+                        <strong>Oh, snap!</strong> Your device could not get a location fix. Ensure your device is connected to a network, and GPS is enabled.
+                    </div>
+
                     <button type="button" class="btn btn-primary btn-lg btn-block" onclick="ping()">Ping!</button>
                 </div>
             </div>

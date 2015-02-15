@@ -49,7 +49,7 @@ function locationUpdated(position) {
     console.log(position);
 
     ws.send(JSON.stringify({
-        "event": "doping", 
+        "event": "updateloc",
         data: {
             "lon": position.coords.longitude,
             "lat": position.coords.latitude,
@@ -59,11 +59,21 @@ function locationUpdated(position) {
         }, 
         gid: gid
     }));
+
+    // hide the alert, if it's visible
+    $(".game .alert-location-invalid").fadeOut(window.config.fadeLength);
 }
 
 // An error occurred while getting the location.
 function locationError(error) {
-    console.log(error);
+    console.error(error);
 
-    alert("Error getting location:\n\n" + error.message);
+    // handle the error
+    if(error.code == PositionError.PERMISSION_DENIED) {
+        alert("To use Ping, you need to allow the application to use your location.");
+        navigator.geolocation.clearWatch(watchID);
+    } else if(error.code == PositionError.POSITION_UNAVAILABLE) {
+        // Show an UI indicator
+        $(".game .alert-location-invalid").fadeIn(window.config.fadeLength);
+    }
 }

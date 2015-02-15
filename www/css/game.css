@@ -1,3 +1,7 @@
 .game .container {
 	margin-top: 1em;
 }
+
+.game .alert-location-invalid {
+    display: none;
+}
