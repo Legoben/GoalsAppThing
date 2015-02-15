@@ -47,6 +47,7 @@ function playPong(distance) {
         index = 0;
     }
     
+    console.log(distance,index)
     audioFiles[potato][index].play();
 }
 
@@ -98,7 +99,7 @@ ws.onmessage = function (event) {
             players[i].distance = distance.km * 1000;
             
           setTimeout(function() { 
-                playPong(distance);
+                playPong(distance.km * 1000);
             }, t);
             t += 750;
         }
@@ -174,8 +175,9 @@ var watchID = null;
 
 // Sign up for location updates
 $(document).ready(function() {
+    console.log("READY")
     watchID = navigator.geolocation.watchPosition(locationUpdated, locationError, 
-        { timeout: 15000, enableHighAccuracy: true });
+        { timeout: 1000, enableHighAccuracy: true });
 });
 
 // Stop location updates when the page is unloaded
@@ -195,13 +197,13 @@ function locationUpdated(position) {
             accuracy: position.coords.accuracy,
             pid: myid,
 
-            device: {
+            /*device: {
                 uuid: device.uuid,
 
                 name: device.model,
                 platform: device.platform,
                 version: device.version
-            }
+            }*/
         }, 
         gid: gid
     }));
