@@ -44,9 +44,6 @@ ws.onmessage = function (event) {
         
         console.log("You're in!");
 
-        // push player
-        players.push(j.data);
-
         // update list
         updatePlayerList();       
     } else if(e == "playerjoin"){
