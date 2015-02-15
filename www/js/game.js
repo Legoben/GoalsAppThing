@@ -1,8 +1,21 @@
-var ws = new WebSocket("ws://ping.ngrok.com/ws");
+function getUrlVars() {
+	var vars = {};
+	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+		vars[key] = value;
+	});
+	return vars;
+}
 
+var gid = null;
+if(getUrlVars()['rid'] != ''){
+    gid = getUrlVars()['rid'];
+    var ws = new WebSocket("ws://ping.ngrok.com/ws?id="+gid);
+} else {
+    var ws = new WebSocket("ws://ping.ngrok.com/ws");
+}
 var players = []
 var myid = null;
-var gid = null;
+
 
 // message handler
 ws.onmessage = function (event) {
@@ -23,6 +36,15 @@ ws.onmessage = function (event) {
         gid = j.data.gameid;
         
         console.log("You're in!")
+        
+        
+        for(i = 0; i < players.length; i++){
+            if(i == myid){
+                var s = '<li class="list-group-item"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+' (you)</span></li>'
+            } else {
+                var s = '<li class="list-group-item"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+'</span></li>'   
+            }
+        }
         
     } else if(e == "playerjoin"){
         //Do other thing
@@ -49,7 +71,7 @@ function locationUpdated(position) {
     console.log(position);
 
     ws.send(JSON.stringify({
-        "event":"doping", 
+        "event":"updateloc", 
         data: {
             "lon": position.coords.longitude,
             "lat": position.coords.latitude,
@@ -66,3 +88,4 @@ function locationError(error) {
 
     alert("Error getting location:\n\n" + error.message);
 }
+

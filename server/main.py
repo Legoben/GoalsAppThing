@@ -64,13 +64,11 @@ class WebSocketHandler(websocket.WebSocketHandler):
         j = json.loads(message)
 
         if j['event'] == "doping":
-            lat = j['data']['lat']
-            lon = j['data']['lon']
             pid = j['data']['pid']
             gid = j['gid']
 
-            games[gid]['players'][pid]['currloc'] = {"lat":lat,"lon":lon}
-            games[gid]['players'][pid]['lochistory'].append({"lat":lat,"lon":lon})
+            lat = games[gid]['players'][pid]['currloc']['lat']
+            lon = games[gid]['players'][pid]['currloc']['lon']
 
             dists = []
 
@@ -89,7 +87,13 @@ class WebSocketHandler(websocket.WebSocketHandler):
             print(games[gid])
 
         if j['event'] == "updateloc":
-            pass
+            lat = j['data']['lat']
+            lon = j['data']['lon']
+            pid = j['data']['pid']
+            gid = j['gid']
+
+            games[gid]['players'][pid]['currloc'] = {"lat":lat,"lon":lon}
+            games[gid]['players'][pid]['lochistory'].append({"lat":lat,"lon":lon})
 
 
 
