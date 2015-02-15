@@ -49,7 +49,13 @@ function playPong(distance, callback) {
 
     // plox
     var audio = document.createElement('audio');
-    audio.src = audioFiles[potato][index];
+
+    if (device.platform == 'Android') {
+        audio.src = '/android_asset/www/' + audioFiles[potato][index];
+    } else {
+        audio.src = audioFiles[potato][index];
+    }
+
     audio.play();
     
     audio.addEventListener("ended", function() {
