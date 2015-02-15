@@ -56,8 +56,8 @@ ws.onmessage = function (event) {
         }
         
     } else if(e == "playerjoin"){
-        //Do other thing
-    
+         var s = '<li class="list-group-item"><span class="badge">66m</span><span style="color:'+j.data.pcolor+'">'+j.data.pname+' (you)</span></li>'
+         $(".list-group").append(s)
     }
 }
 
