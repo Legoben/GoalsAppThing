@@ -31,5 +31,10 @@ $(document).ready(function() {
     // join an existing game
     $(".home .btn-join-room").click(function(e) {
         showLoader();
-    })
+    });
+
+    // Is there geolocation support?
+    if(!Modernizr.geolocation) {
+        alert("Your browser sucks, and does not support geolocation APIs.");
+    }
 });
