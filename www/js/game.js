@@ -6,6 +6,31 @@ function getUrlVars() {
 	return vars;
 }
 
+// SFX
+var audioFiles = [
+    [
+        "ben/1.wav",
+        "ben/2.wav",
+        "ben/3.wav",
+        "ben/4.wav",
+        "ben/5.wav",
+        "ben/6.wav"
+    ],
+    [
+        "trist/1.wav",
+        "trist/2.wav",
+        "trist/3.wav",
+        "trist/4.wav",
+        "trist/5.wav",
+        "trist/6.wav"
+    ],
+];
+
+// Plays a "Pong !11!1!!1!!1!!!!!ekeven" sfx, given a distance
+function playPong(distance) {
+    
+}
+
 // Determine if this is a new game or should be resumed
 var gid = null;
 
@@ -181,11 +206,11 @@ function locationError(error) {
     $(".game #debug-error").html(error.message + " (code " + error.code + ")");
 }
 
-function ping(){
+function ping() {
     ws.send(JSON.stringify({"event":"doping", "data":{"pid":myid}, "gid":gid}))   
 }
 
-function sendMessage(){
+function sendMessage() {
     var msg = $("#chattext").val()
     if(msg == ""){    
         return
@@ -194,7 +219,7 @@ function sendMessage(){
     $("#chattext").val("") 
 }
 
-$("#chattext").keyup(function(event){
+$("#chattext").keyup(function(event) {
     if(event.keyCode == 13){
         $("#chatbtn").click();
     }

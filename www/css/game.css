@@ -18,3 +18,7 @@
 .game .game-id {
 	font-family: 'Monaco', 'Menlo', 'Courier', fixed-width;
 }
+
+.game #chatmodal {
+	max-height: 90%;
+}
