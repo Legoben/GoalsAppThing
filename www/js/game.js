@@ -50,11 +50,11 @@ function playPong(distance, callback) {
     // plox
     var audio = document.createElement('audio');
 
-    if (device.platform == 'Android') {
-        audio.src = '/android_asset/www/' + audioFiles[potato][index];
-    } else {
-        audio.src = audioFiles[potato][index];
-    }
+    //if (device.platform == 'Android') {
+    //    audio.src = '/android_asset/www/' + audioFiles[potato][index];
+    //} else {
+        audio.src = 'http://ping.helloben.co/' + audioFiles[potato][index];
+    //}
 
     audio.play();
     
