@@ -24,7 +24,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">Ping™</a>
+                    <a class="navbar-brand" href="index.html">Ping™</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -49,9 +49,16 @@
         </nav>
 
         <div class="container">
-            <!-- ping button -->
+            <!-- ping button and alerts -->
             <div class="row">
                 <div class="col-sm-12 ping">
+                    <div class="alert alert-danger alert-location-invalid" role="alert">
+                        <strong>Oh, snap!</strong> Your device could not get a location fix. Ensure your device is connected to a network, and GPS is enabled.
+                    </div>
+                    <div class="alert alert-danger alert-location-error" role="alert">
+                        <strong>Error retrieving location</strong> <p></p>
+                    </div>
+
                     <button type="button" class="btn btn-primary btn-lg btn-block" onclick="ping()">Ping!</button>
                 </div>
             </div>
@@ -74,6 +81,40 @@
                     </ul>
                 </div>
             </div>
+
+            <!-- debugging information -->
+            <div class="row">
+                <div class="col-sm-12 debug">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Debug Info</h3>
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th>Key</th>
+                                <th>Value</th>
+                            </tr>
+                            <tr>
+                                <td>Position</td>
+                                <td id="debug-pos"></td>
+                            </tr>
+                            <tr>
+                                <td>Altitude</td>
+                                <td id="debug-altitude"></td>
+                            </tr>
+                            <tr>
+                                <td>Accuracy</td>
+                                <td id="debug-accuracy"></td>
+                            </tr>
+                            <tr>
+                                <td>Last Error</td>
+                                <td id="debug-error"></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div> 
+            </div>
+
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>

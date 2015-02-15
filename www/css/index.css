@@ -86,6 +86,14 @@ nav {
     height: auto;
 }
 
+/* alerts */
+.alert {
+    font-size: 16px;
+    line-height: 1.35em;
+
+    margin-bottom: 10px;
+}
+
 /* make the font-related markup tags actually work */
 strong {
     font-family: "robotomedium";
