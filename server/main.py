@@ -59,7 +59,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
                     pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"name":p['name'], "color":p['color'], "pid":pid, "distance":-1}}))
                 except Exception as e:
                     print("ERROR:", e)
-                    #Get this when player has left the game.
+                    #Get this when player has loedds
 
             games[id]["players"].append(p)
 

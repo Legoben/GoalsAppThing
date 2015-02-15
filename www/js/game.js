@@ -31,9 +31,11 @@ function playPong(distance) {
     var potato = 0;
     var index = 0;
 
-    if(distance <= 3) {
+    if(distance < 1) {
+        return
+    } else if(distance == 1) {
         index = 5;
-    } else if(distance > 3 && distance <= 8) {
+    } else if(distance >= 2 && distance <= 8) {
         index = 4;
     } else if(distance > 8 && distance <= 13) {
         index = 3;
