@@ -213,7 +213,7 @@ var watchID = null;
 function startPos(){
     console.log("READY")
     watchID = navigator.geolocation.watchPosition(locationUpdated, locationError, 
-        { timeout: 1000, enableHighAccuracy: true });
+        { timeout: 5000, enableHighAccuracy: true });
 }
 
 // Stop location updates when the page is unloaded
