@@ -1,10 +1,10 @@
 var ws = new WebSocket("ws://ping.ngrok.com/ws");
 
-
 var players = []
 var myid = null;
 var gid = null;
 
+// message handler
 ws.onmessage = function (event) {
     var j = JSON.parse(event.data)
     console.log(j)
@@ -30,10 +30,39 @@ ws.onmessage = function (event) {
     }
 }
 
-function ping(){
-    //Get Location
-    
-    ws.send(JSON.stringify({"event":"doping", data:{"lon":0, "lat":0, "pid": myid}, gid: gid}))
+// various location stuff
+var watchID = null;
 
+// Sign up for location updates
+$(document).ready(function() {
+    watchID = navigator.geolocation.watchPosition(locationUpdated, locationError, 
+        { timeout: 10000, enableHighAccuracy: true });
+});
 
+// Stop location updates when the page is unloaded
+$(document).unload(function() {
+    navigator.geolocation.clearWatch(watchID);
+});
+
+// The location has updated
+function locationUpdated(position) {
+    console.log(position);
+
+    ws.send(JSON.stringify({
+        "event":"doping", 
+        data: {
+            "lon": position.coords.longitude,
+            "lat": position.coords.latitude,
+            "alt": position.coords.altitude,
+            "accuracy": position.coords.accuracy,
+            "pid": myid}, 
+        gid: gid
+    }));
+}
+
+// An error occurred while getting the location.
+function locationError(error) {
+    console.log(error);
+
+    alert("Error getting location:\n\n" + error.message);
 }
