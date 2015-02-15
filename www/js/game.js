@@ -38,10 +38,11 @@ ws.onmessage = function (event) {
     
     var e = j.event;
     if(e == "dopong") {
-        for(i = 0; i < players.length; i++){
-            players[i].distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, j.data.dists[i].lat, j.data.dists[i].lon) 
+        for(i = 0; i < players.length; i++) {
+            var distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, 
+                j.data.dists[i].lat, j.data.dists[i].lon);
+            players[i].distance = distance.km * 1000;
         }
-
     } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
