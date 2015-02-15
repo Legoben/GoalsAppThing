@@ -34,11 +34,17 @@ window.loaderImages = [
 ];
 
 function showLoader() {
+	// width, pls
+	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0) - 32;
+
 	// select a random indicator, pls
 	var index = getRandomInt(0, (window.loaderImages.length - 1));
 
+	// apply it
 	$(".loader img").attr("src", window.loaderImages[index].src);
-	$(".loader img").css("max-width", window.loaderImages[index].width + "px");
+
+	var imageWidth = Math.min(w, window.loaderImages[index].width);
+	$(".loader img").css("max-width", imageWidth + "px");
 
 	// display it
     $(".loader").fadeIn(window.config.fadeLength);
