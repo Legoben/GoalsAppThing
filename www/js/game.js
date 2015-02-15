@@ -1,7 +1,7 @@
 function getUrlVars() {
 	var vars = {};
 	var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-		vars[key] = value;
+		vars[key] = decodeURIComponent(value).trim();
 	});
 	return vars;
 }
@@ -18,7 +18,6 @@ if(getUrlVars()['rid'] != ''){
 }
 var players = []
 var myid = null;
-
 
 // message handler
 ws.onmessage = function (event) {
