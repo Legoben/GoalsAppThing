@@ -5,3 +5,11 @@
 .game .alert-location-invalid {
     display: none;
 }
+
+.game .alert-location-error {
+    display: none;
+}
+
+.game .debug td {
+	font-size: 14px;
+}
