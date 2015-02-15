@@ -24,7 +24,7 @@ def gen_player(sock,num=0):
 def sendable_p(id):
     sp = []
     for p in games[id]['players']:
-        sp.append({"name":p['name'], "color":p['color'], "pid":p['pid']})
+        sp.append({"name":p['name'], "color":p['color'], "pid":p['pid'], "distance":-1})
 
     return sp
 
@@ -55,7 +55,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
             p = gen_player(self,pid)
 
             for pl in games[id]['players']:
-                pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"name":p['name'], "color":p['color'], "pid":pid}}))
+                pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"name":p['name'], "color":p['color'], "pid":pid, "distance":-1}}))
 
             games[id]["players"].append(p)
 
