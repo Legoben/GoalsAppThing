@@ -21,7 +21,7 @@ $(document).ready(function() {
     // join an existing game
     $(".home .btn-join-room").click(function(e) {
         showLoader();
-        window.location = "game.html?rid= " + $(".home #room-id").val();
+        window.location = "game.html?rid=" + $(".home #room-id").val();
     });
 
     // Is there geolocation support?

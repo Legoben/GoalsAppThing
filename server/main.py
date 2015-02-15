@@ -55,7 +55,11 @@ class WebSocketHandler(websocket.WebSocketHandler):
             p = gen_player(self,pid)
 
             for pl in games[id]['players']:
-                pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"name":p['name'], "color":p['color'], "pid":pid, "distance":-1}}))
+                try:
+                    pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"name":p['name'], "color":p['color'], "pid":pid, "distance":-1}}))
+                except Exception as e:
+                    print("ERROR:", e)
+                    #Get this when player has left the game.
 
             games[id]["players"].append(p)
 
@@ -70,6 +74,14 @@ class WebSocketHandler(websocket.WebSocketHandler):
         if j['event'] == "doping":
             pid = j['data']['pid']
             gid = j['gid']
+
+            if games[gid]['players'][pid]['currloc'] == None:
+                a = []
+                for p in games[gid]['players']:
+                    a.append(-1)
+                    self.write_message(json.dumps({"event":"dopong", "data":{"dists":a}}))
+                    return
+
 
             lat = games[gid]['players'][pid]['currloc']['lat']
             lon = games[gid]['players'][pid]['currloc']['lon']
