@@ -93,4 +93,7 @@ function locationError(error) {
         $(".game .alert-location-error p:first-child").html(error.message);
         $(".game .alert-location-error").fadeIn(window.config.fadeLength);
     }
+
+    // Update debug
+    $(".game #debug-error").html(error.message + "(" + error.code + ")");
 }
