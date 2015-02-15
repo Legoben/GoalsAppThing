@@ -42,11 +42,17 @@ ws.onmessage = function (event) {
         $(".game .game-id").html(gid);
         $(".game #debug-gid").html(gid);
         
-        console.log("You're in!")
+        console.log("You're in!");
 
+        // push player
+        players.push(j.data);
+
+        // update list
         updatePlayerList();       
     } else if(e == "playerjoin"){
         players.push(j.data);
+
+        // update list
         updatePlayerList();   
     }
 }
@@ -59,14 +65,16 @@ function updatePlayerList() {
     $(".game .players").html("");
 
     // render all players
-    for(i = 0; i < players.length; i++){
-        if(i == myid){
-            var s = '<li class="list-group-item"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+' (you)</span></li>'
+    for(i = 0; i < players.length; i++) {
+        // render differently if this is the current player or nah
+        if(i == myid) {
+            var s = '<li class="list-group-item" data-pid="' + players[i].pid + '"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+' (you)</span></li>'
         } else {
-            var s = '<li class="list-group-item"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+'</span></li>'   
+            var s = '<li class="list-group-item" data-pid="' + players[i].pid + '"><span class="badge">66m</span><span style="color:'+players[i].color+'">'+players[i].name+'</span></li>'   
         }
         
-        $(".game .players").append(s)
+        // append to list
+        $(".game .players").append(s);
     }
 }
 
