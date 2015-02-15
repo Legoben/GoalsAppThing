@@ -38,6 +38,8 @@ ws.onmessage = function (event) {
     
     var e = j.event;
     if(e == "dopong") {
+
+    } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
         players = j.data.players;
