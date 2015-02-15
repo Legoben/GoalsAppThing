@@ -38,10 +38,11 @@ ws.onmessage = function (event) {
     
     var e = j.event;
     if(e == "dopong") {
-        for(i = 0; i < players.length; i++){
-            players[i].distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, j.data.dists[i].lat, j.data.dists[i].lon) 
+        for(i = 0; i < players.length; i++) {
+            var distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, 
+                j.data.dists[i].lat, j.data.dists[i].lon);
+            players[i].distance = distance.km * 1000;
         }
-
     } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
@@ -79,11 +80,19 @@ function updatePlayerList() {
         // render differently if this is the current player or nah
         if(i == myid) {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + player.distance + 'm</span>';
+
+            if(player.distance >= 0) {
+                s += '<span class="badge">' + player.distance + 'm</span>';
+            }
+            
             s += '<span style="color:' + player.color + '">' + player.name+' (you)</span></li>';
         } else {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + player.distance + 'm</span>';
+
+            if(player.distance >= 0) {
+                s += '<span class="badge">' + player.distance + 'm</span>';
+            }
+
             s += '<span style="color:' + player.color + '">' + player.name+'</span></li>';
         }
         
@@ -165,6 +174,6 @@ function locationError(error) {
     $(".game #debug-error").html(error.message + "(" + error.code + ")");
 }
 
-function ping(){
+function ping() {
     ws.send(JSON.stringify({"event":"doping", "data":{"pid":myid}, "gid":gid}))   
 }
