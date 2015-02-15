@@ -9,25 +9,25 @@ function getUrlVars() {
 // SFX
 var audioFiles = [
     [
-        new Audio("audio/ben/1.wav"),
-        new Audio("audio/ben/2.wav"),
-        new Audio("audio/ben/3.wav"),
-        new Audio("audio/ben/4.wav"),
-        new Audio("audio/ben/5.wav"),
-        new Audio("audio/ben/6.wav")
+         "audio/ben/1.mp3",
+         "audio/ben/2.mp3",
+         "audio/ben/3.mp3",
+         "audio/ben/4.mp3",
+         "audio/ben/5.mp3",
+         "audio/ben/6.mp3"
     ],
     [
-        new Audio("audio/trist/1.wav"),
-        new Audio("audio/trist/2.wav"),
-        new Audio("audio/trist/3.wav"),
-        new Audio("audio/trist/4.wav"),
-        new Audio("audio/trist/5.wav"),
-        new Audio("audio/trist/6.wav")
+         "audio/trist/1.wav",
+         "audio/trist/2.wav",
+         "audio/trist/3.wav",
+         "audio/trist/4.wav",
+         "audio/trist/5.wav",
+         "audio/trist/6.wav"
     ],
 ];
 
 // Plays a "Pong !11!1!!1!!1!!!!!ekeven" sfx, given a distance
-function playPong(distance) {
+function playPong(distance, callback) {
     var potato = 0;
     var index = 0;
 
@@ -46,9 +46,15 @@ function playPong(distance) {
     } else {
         index = 0;
     }
+
+    // plox
+    var audio = document.createElement('audio');
+    audio.src = audioFiles[potato][index];
+    audio.play();
     
-    console.log(distance,index)
-    audioFiles[potato][index].play();
+    audio.addEventListener("ended", function() {
+        callback();
+    });
 }
 
 // Determine if this is a new game or should be resumed
@@ -82,32 +88,41 @@ ws.onmessage = function (event) {
     console.log(j);
     
     var e = j.event;
-    console.log(j);
-
-
     if(e == "dopong") {
         // do we have a location?
         if(!lastLocation) return;
 
         // recalculate all the stuff
-        var t = 750;
+        var t = 0;
 
         for(i = 0; i < players.length; i++) {
-            var distance = findDistance(lastLocation.coords.latitude, lastLocation.coords.longitude, 
-                j.data.dists[i].lat, j.data.dists[i].lon);
+            if(i != myid) {
+                var distance = findDistance(lastLocation.coords.latitude, lastLocation.coords.longitude, 
+                    j.data.dists[i].lat, j.data.dists[i].lon);
 
-            players[i].distance = distance.km * 1000;
-            
-          setTimeout(function() { 
-                playPong(distance.km * 1000);
-            }, t);
-            t += 750;
+                players[i].distance = distance.km * 1000;
+                var id = players[i].pid;
+                
+                // play sfx
+                setTimeout(function() {
+                    // play the pong pls 
+                    playPong(distance.km * 1000, function() {
+                        // remove the highlight after it finished playing
+                        $(".players li[data-pid='" + id + "']").removeClass("active");
+                    });
+
+                    // highlight this row
+                    $(".players li[data-pid='" + id + "']").addClass("active");
+                }, t);
+
+                t += 750;
+            }
         }
         
+
+
         // update list
         updatePlayerList();
-        
-        
     } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
@@ -125,11 +140,9 @@ ws.onmessage = function (event) {
         updatePlayerList();       
     } else if(e == "recmessage") {
         $('.chatstuff').prepend(j.data.msg);
-        var num = parseInt($("#newchat").text()) + 1
-        console.log(num)
-        $("#newchat").text(num + "")
-        
-        
+
+        var num = parseInt($("#newchat").text()) + 1;
+        $("#newchat").text(num + "");
     } else if(e == "playerjoin") {
         players.push(j.data);
 
