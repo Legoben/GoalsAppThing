@@ -38,11 +38,16 @@ ws.onmessage = function (event) {
     
     var e = j.event;
     if(e == "dopong") {
+        // recalculate all the stuff
         for(i = 0; i < players.length; i++) {
-            var distance = findDistance(lastLocation.coords.longitude, lastLocation.coords.latitude, 
+            var distance = findDistance(lastLocation.coords.latitude, lastLocation.coords.longitude, 
                 j.data.dists[i].lat, j.data.dists[i].lon);
+
             players[i].distance = distance.km * 1000;
         }
+
+        // update list
+        updatePlayerList();
     } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
@@ -87,11 +92,14 @@ function updatePlayerList() {
         // render differently if this is the current player or nah
         if(i == myid) {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + player.distance + 'm</span>';
             s += '<span style="color:' + player.color + '">' + player.name+' (you)</span></li>';
         } else {
             var s = '<li class="list-group-item" data-pid="' + player.pid + '">';
-            s += '<span class="badge">' + player.distance + 'm</span>';
+
+            if(player.distance >= 0) {
+                s += '<span class="badge">' + Math.round(player.distance) + 'm</span>';
+            }
+
             s += '<span style="color:' + player.color + '">' + player.name+'</span></li>';
         }
         
@@ -170,7 +178,7 @@ function locationError(error) {
     }
 
     // Update debug
-    $(".game #debug-error").html(error.message + "(" + error.code + ")");
+    $(".game #debug-error").html(error.message + " (code " + error.code + ")");
 }
 
 function ping(){
