@@ -42,24 +42,22 @@ nav {
     background: rgba(0, 0, 0, 0.70);
 
     display: none;
-
-    padding: 32px;
 }
 
 .loader .spinner {
     margin-top: 5px;
 
-    text-align: center;
     display: table;
-
     height: 100%;
     width: 100%;
 }
 
 .loader .spinner .content {
     display: table-cell;
+    height: 100%;
 
     vertical-align: middle;
+    text-align: center;
 }
 
 .loader .spinner .content p {
