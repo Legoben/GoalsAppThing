@@ -151,7 +151,8 @@ function locationError(error) {
 
     // handle the error
     if(error.code == PositionError.PERMISSION_DENIED) {
-        alert("To use Ping, you need to allow the application to use your location.");
+        $(".game .alert-location-error p:first-child").html("To use Ping, you need to allow the application to use your location.");
+        $(".game .alert-location-error").fadeIn(window.config.fadeLength);
         navigator.geolocation.clearWatch(watchID);
     } else if(error.code == PositionError.POSITION_UNAVAILABLE) {
         // Show an UI indicator
