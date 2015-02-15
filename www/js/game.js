@@ -36,7 +36,7 @@ var watchID = null;
 // Sign up for location updates
 $(document).ready(function() {
     watchID = navigator.geolocation.watchPosition(locationUpdated, locationError, 
-        { timeout: 10000, enableHighAccuracy: true });
+        { timeout: 15000, enableHighAccuracy: true });
 });
 
 // Stop location updates when the page is unloaded
@@ -49,13 +49,14 @@ function locationUpdated(position) {
     console.log(position);
 
     ws.send(JSON.stringify({
-        "event":"doping", 
+        "event": "doping", 
         data: {
             "lon": position.coords.longitude,
             "lat": position.coords.latitude,
             "alt": position.coords.altitude,
             "accuracy": position.coords.accuracy,
-            "pid": myid}, 
+            "pid": myid
+        }, 
         gid: gid
     }));
 }
