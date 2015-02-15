@@ -66,19 +66,17 @@ function playPong(distance, callback) {
     // plox
     var audio = document.createElement('audio');
 
-    //if (device.platform == 'Android') {
-    //    audio.src = '/android_asset/www/' + audioFiles[potato][index];
-    //} else {
-        //audio.src = 'http://ping.helloben.co/' + audioFiles[potato][index];
-    //}
-
-    playAudio('http://ping.helloben.co/' + audioFiles[potato][index])
-    //audio.play();
-    
-    //audio.addEventListener("ended", function() {
-    //    callback();
-    //});
+    if (!window.divice) {
+        a = new Audio(audioFiles[potato][index])
+        a.play()
+    }else if (device.platform == 'Android') {
+        playAudio('http://ping.helloben.co/' + audioFiles[potato][index])
+    } else {
+        a = new Audio(audioFiles[potato][index])
+        a.play()
+    }
 }
+
 
 // Determine if this is a new game or should be resumed
 var gid = null;
@@ -161,6 +159,8 @@ ws.onmessage = function (event) {
 
         // update list
         updatePlayerList();       
+        
+        startPos();
     } else if(e == "recmessage") {
         $('.chatstuff').prepend(j.data.msg);
 
@@ -210,11 +210,11 @@ function updatePlayerList() {
 var watchID = null;
 
 // Sign up for location updates
-$(document).ready(function() {
+function startPos(){
     console.log("READY")
     watchID = navigator.geolocation.watchPosition(locationUpdated, locationError, 
         { timeout: 1000, enableHighAccuracy: true });
-});
+}
 
 // Stop location updates when the page is unloaded
 $(document).unload(function() {
