@@ -19,6 +19,7 @@
 	font-family: 'Monaco', 'Menlo', 'Courier', fixed-width;
 }
 
-.game #chatmodal {
-	max-height: 90%;
+.game .modal-body {
+	max-height: 85%;
+	overflow: scroll;
 }

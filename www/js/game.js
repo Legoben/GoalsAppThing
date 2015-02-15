@@ -9,28 +9,43 @@ function getUrlVars() {
 // SFX
 var audioFiles = [
     [
-        new Audio("ben/1.wav"),
-        new Audio("ben/2.wav"),
-        new Audio("ben/3.wav"),
-        new Audio("ben/4.wav"),
-        new Audio("ben/5.wav"),
-        new Audio("ben/6.wav")
+        new Audio("audio/ben/1.wav"),
+        new Audio("audio/ben/2.wav"),
+        new Audio("audio/ben/3.wav"),
+        new Audio("audio/ben/4.wav"),
+        new Audio("audio/ben/5.wav"),
+        new Audio("audio/ben/6.wav")
     ],
     [
-        new Audio("trist/1.wav"),
-        new Audio("trist/2.wav"),
-        new Audio("trist/3.wav"),
-        new Audio("trist/4.wav"),
-        new Audio("trist/5.wav"),
-        new Audio("trist/6.wav")
+        new Audio("audio/trist/1.wav"),
+        new Audio("audio/trist/2.wav"),
+        new Audio("audio/trist/3.wav"),
+        new Audio("audio/trist/4.wav"),
+        new Audio("audio/trist/5.wav"),
+        new Audio("audio/trist/6.wav")
     ],
 ];
 
 // Plays a "Pong !11!1!!1!!1!!!!!ekeven" sfx, given a distance
 function playPong(distance) {
+    var potato = 0;
+    var index = 0;
+
+    if(distance <= 3) {
+        index = 5;
+    } else if(distance > 3 && distance <= 8) {
+        index = 4;
+    } else if(distance > 8 && distance <= 13) {
+        index = 3;
+    } else if(distance > 13 && distance <= 24) {
+        index = 2;
+    } else if(distance > 24 && distance <= 40) {
+        index = 1;
+    } else {
+        index = 0;
+    }
     
-    
-    //audioFiles[0/1][num].play();
+    audioFiles[potato][index].play();
 }
 
 // Determine if this is a new game or should be resumed
@@ -64,17 +79,26 @@ ws.onmessage = function (event) {
     console.log(j);
     
     var e = j.event;
+    console.log(j);
+
+
     if(e == "dopong") {
+        // do we have a location?
+        if(!lastLocation) return;
+
         // recalculate all the stuff
-        t=750
+        var t = 750;
+
         for(i = 0; i < players.length; i++) {
             var distance = findDistance(lastLocation.coords.latitude, lastLocation.coords.longitude, 
                 j.data.dists[i].lat, j.data.dists[i].lon);
 
             players[i].distance = distance.km * 1000;
             
-            setTimeout(function(){playPong(distance), t})
-            t+=750
+          setTimeout(function() { 
+                playPong(distance);
+            }, t);
+            t += 750;
         }
         
         // update list
@@ -108,6 +132,8 @@ ws.onmessage = function (event) {
 
         // update list
         updatePlayerList();
+    } else if(e == "error") {
+        window.location = "index.html";
     }
 }
 
@@ -157,8 +183,6 @@ $(document).unload(function() {
 
 // The location has updated
 function locationUpdated(position) {
-    console.log(position);
-
     // Send our location
     ws.send(JSON.stringify({
         event: "updateloc",
@@ -195,8 +219,6 @@ function locationUpdated(position) {
 
 // An error occurred while getting the location.
 function locationError(error) {
-    console.error(error);
-
     // handle the error
     if(error.code == PositionError.PERMISSION_DENIED) {
         $(".game .alert-location-error p:first-child").html("To use Ping, you need to allow the application to use your location.");
@@ -215,20 +237,37 @@ function locationError(error) {
 }
 
 function ping() {
-    ws.send(JSON.stringify({"event":"doping", "data":{"pid":myid}, "gid":gid}))   
+    ws.send(JSON.stringify({
+        "event": "doping",
+        "data": {
+            "pid":myid
+        }, 
+        "gid": gid
+    }));
 }
 
 function sendMessage() {
     var msg = $("#chattext").val()
-    if(msg == ""){    
-        return
+    if(msg.trim() == "") {    
+        return;
     }
-    ws.send(JSON.stringify({"event":"sendchat", "data":{"pid":myid, "msg":msg}, "gid":gid}))  
-    $("#chattext").val("") 
+
+    ws.send(JSON.stringify({
+        event: "sendchat", 
+        data: {
+            pid: myid, 
+            msg: msg
+        },
+        gid: gid
+    }));
+
+    $("#chattext").val("");
 }
 
-$("#chattext").keyup(function(event) {
-    if(event.keyCode == 13){
-        $("#chatbtn").click();
-    }
+$(document).ready(function() {
+    $("#chattext").keyup(function(event) {
+        if(event.keyCode == 13){
+            $("#chatbtn").click();
+        }
+    });
 });
