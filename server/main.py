@@ -32,8 +32,10 @@ class WebSocketHandler(websocket.WebSocketHandler):
     def open(self):
         print("HERE")
         id=self.get_argument("id", None)
-        if id == None:
+        print("ID",id)
+        if id == None or id == "undefined":
             #Make Game
+            print("MAKE GAME")
             id = id_generator()
             p = gen_player(self)
             games[id] = {"players" : [p]}
@@ -44,10 +46,12 @@ class WebSocketHandler(websocket.WebSocketHandler):
         else:
             #Join Game
             if id not in games:
+                print("NOT ID")
                 self.write_message(json.dumps({"event":"error","message":"No such game ID"}))
                 self.close()
+                return
 
-            pid = games[id]["players"].length
+            pid = len(games[id]["players"])
             p = gen_player(self,pid)
 
             for pl in games[id]['players']:
