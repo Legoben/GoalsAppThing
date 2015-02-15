@@ -9,26 +9,28 @@ function getUrlVars() {
 // SFX
 var audioFiles = [
     [
-        "ben/1.wav",
-        "ben/2.wav",
-        "ben/3.wav",
-        "ben/4.wav",
-        "ben/5.wav",
-        "ben/6.wav"
+        new Audio("ben/1.wav"),
+        new Audio("ben/2.wav"),
+        new Audio("ben/3.wav"),
+        new Audio("ben/4.wav"),
+        new Audio("ben/5.wav"),
+        new Audio("ben/6.wav")
     ],
     [
-        "trist/1.wav",
-        "trist/2.wav",
-        "trist/3.wav",
-        "trist/4.wav",
-        "trist/5.wav",
-        "trist/6.wav"
+        new Audio("trist/1.wav"),
+        new Audio("trist/2.wav"),
+        new Audio("trist/3.wav"),
+        new Audio("trist/4.wav"),
+        new Audio("trist/5.wav"),
+        new Audio("trist/6.wav")
     ],
 ];
 
 // Plays a "Pong !11!1!!1!!1!!!!!ekeven" sfx, given a distance
 function playPong(distance) {
     
+    
+    //audioFiles[0/1][num].play();
 }
 
 // Determine if this is a new game or should be resumed
@@ -64,15 +66,21 @@ ws.onmessage = function (event) {
     var e = j.event;
     if(e == "dopong") {
         // recalculate all the stuff
+        t=750
         for(i = 0; i < players.length; i++) {
             var distance = findDistance(lastLocation.coords.latitude, lastLocation.coords.longitude, 
                 j.data.dists[i].lat, j.data.dists[i].lon);
 
             players[i].distance = distance.km * 1000;
+            
+            setTimeout(function(){playPong(distance), t})
+            t+=750
         }
-
+        
         // update list
         updatePlayerList();
+        
+        
     } else if(e == "youjoin") {
         // Do Thing
         myid = j.data.youid;
