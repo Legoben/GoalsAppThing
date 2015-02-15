@@ -32,17 +32,9 @@
                         <li><a href="#">Game id: <span class="game-id"></span></a></li>
 
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="#">Link</a></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Chat <span class="caret"></span></a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="#">Action</a></li>
-                                <li><a href="#">Another action</a></li>
-                                <li><a href="#">Something else here</a></li>
-                                <li class="divider"></li>
-                                <li><input id="sendchat" placeholder="Message ..."></li>
-                            </ul>
-                        </li>
+                        <li><a href="#" onclick="return false" data-toggle="modal" data-target="#chatmodal">Chat (<span id="newchat">0</span>)</a></li>
+                        <li><a href="#">Config</a></li>
+                        
                     </ul>
                 </div>
             </div>
@@ -108,6 +100,29 @@
                 </div> 
             </div>
 
+        </div>
+        
+        <div class="modal fade" id="chatmodal" tabindex="-1" role="dialog" aria-labelledby="chatmodalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="chatmodalLabel">Chat</h4>
+              </div>
+              <div class="modal-body ">
+                  <span class="chatstuff"></span>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Message ..." id="chattext">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" onclick="sendMessage()" id="chatbtn">Send!</button>
+                    </span>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <script type="text/javascript" src="cordova.js"></script>

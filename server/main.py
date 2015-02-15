@@ -1,4 +1,4 @@
-from tornado import ioloop, web, websocket
+from tornado import ioloop, web, websocket, escape
 import string
 import random
 from math import sin, cos, acos, asin, sqrt, atan
@@ -93,7 +93,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
             self.write_message(json.dumps({"event":"dopong", "data":{"dists":dists}}))
             print(games[gid])
 
-        if j['event'] == "updateloc":
+        elif j['event'] == "updateloc":
             lat = j['data']['lat']
             lon = j['data']['lon']
             pid = j['data']['pid']
@@ -101,6 +101,19 @@ class WebSocketHandler(websocket.WebSocketHandler):
 
             games[gid]['players'][pid]['currloc'] = {"lat":lat,"lon":lon}
             games[gid]['players'][pid]['lochistory'].append({"lat":lat,"lon":lon})
+
+        elif j['event'] == "sendchat":
+            pid = j['data']['pid']
+            gid = j['gid']
+            msg = j['data']['msg']
+
+            formatted = "<b>"+games[gid]['players'][pid]['name']+":</b> "+escape.xhtml_escape(msg)+"<br>"
+
+            for p in games[gid]['players']:
+                p['socket'].write_message(json.dumps({"event":"recmessage", "data":{"msg":formatted}}))
+
+            pass
+
 
 
 

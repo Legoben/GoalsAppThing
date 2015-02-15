@@ -58,6 +58,13 @@ ws.onmessage = function (event) {
 
         // update list
         updatePlayerList();       
+    } else if(e == "recmessage") {
+        $('.chatstuff').prepend(j.data.msg);
+        var num = parseInt($("#newchat").text()) + 1
+        console.log(num)
+        $("#newchat").text(num + "")
+        
+        
     } else if(e == "playerjoin") {
         players.push(j.data);
 
@@ -169,3 +176,18 @@ function locationError(error) {
 function ping(){
     ws.send(JSON.stringify({"event":"doping", "data":{"pid":myid}, "gid":gid}))   
 }
+
+function sendMessage(){
+    var msg = $("#chattext").val()
+    if(msg == ""){    
+        return
+    }
+    ws.send(JSON.stringify({"event":"sendchat", "data":{"pid":myid, "msg":msg}, "gid":gid}))  
+    $("#chattext").val("") 
+}
+
+$("#chattext").keyup(function(event){
+    if(event.keyCode == 13){
+        $("#chatbtn").click();
+    }
+});
