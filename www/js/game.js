@@ -137,3 +137,7 @@ function locationError(error) {
     // Update debug
     $(".game #debug-error").html(error.message + "(" + error.code + ")");
 }
+
+function ping(){
+    ws.send(JSON.stringify({"event":"doping", "data":{"pid":myid}, "gid":gid}))   
+}
