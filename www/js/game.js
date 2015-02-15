@@ -9,6 +9,9 @@ function getUrlVars() {
 var gid = null;
 if(getUrlVars()['rid'] != ''){
     gid = getUrlVars()['rid'];
+    $(".game .game-id").html(gid);
+    $(".game #debug-gid").html(gid);
+
     var ws = new WebSocket("ws://ping.ngrok.com/ws?id="+gid);
 } else {
     var ws = new WebSocket("ws://ping.ngrok.com/ws");
@@ -34,6 +37,10 @@ ws.onmessage = function (event) {
         myid = j.data.youid;
         players = j.data.players;
         gid = j.data.gameid;
+
+        // update game id
+        $(".game .game-id").html(gid);
+        $(".game #debug-gid").html(gid);
         
         console.log("You're in!")
         
