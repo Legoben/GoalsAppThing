@@ -44,7 +44,7 @@ var audioFiles = [
 
 // Plays a "Pong !11!1!!1!!1!!!!!ekeven" sfx, given a distance
 function playPong(distance, callback) {
-    var potato = 0;
+    var potato = $(".sound-thing").val();
     var index = 0;
 
     if(distance < 1) {
