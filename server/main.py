@@ -17,8 +17,8 @@ games = {}
 def id_generator(size=6, chars=string.digits): #Generates a random ID
     return ''.join(random.choice(chars) for _ in range(size))
 
-def gen_player(sock,num=1):
-    player = {"name":"Player "+str(num), "color":random.choice(colors), "currloc":None, "lochistory":[], "socket":sock}
+def gen_player(sock,num=0):
+    player = {"name":"Player "+str(num+1), "color":random.choice(colors), "currloc":None, "lochistory":[], "socket":sock, "pid":num}
     return player
 
 def sendable_p(id):
@@ -48,7 +48,7 @@ class WebSocketHandler(websocket.WebSocketHandler):
                 self.close()
 
             pid = games[id]["players"].length
-            p = gen_player(self,pid + 1)
+            p = gen_player(self,pid)
 
             for pl in games[id]['players']:
                 pl['socket'].write_message(json.dumps({"event":"playerjoin", "data":{"pname":p['name'], "pcolor":p['color'], "pid":pid}}))
@@ -57,13 +57,39 @@ class WebSocketHandler(websocket.WebSocketHandler):
 
             self.write_message(json.dumps({"event":"youjoin", "data":{"gameid":id, "players": sendable_p(id), "youid":pid}}))
 
+
+
     def on_message(self, message):
         print(message)
         j = json.loads(message)
 
         if j['event'] == "doping":
-            pass
+            lat = j['data']['lat']
+            lon = j['data']['lon']
+            pid = j['data']['pid']
+            gid = j['gid']
 
+            games[gid]['players'][pid]['currloc'] = {"lat":lat,"lon":lon}
+            games[gid]['players'][pid]['lochistory'].append({"lat":lat,"lon":lon})
+
+            dists = []
+
+            for p in games[gid]['players']:
+                if p['pid'] == pid or p['curloc'] == None:
+                    dists.append(None)
+                    continue
+
+                tdist = dist(lat,lon, p['currloc']['lat'], p['currloc']['lon'])
+
+                print(tdist)
+
+                dists.append(tdist)
+
+            self.write_message(json.dumps({"event":"dopong", "data":{"dists":dists}}))
+            print(games[gid])
+
+        if j['event'] == "updateloc":
+            pass
 
 
 
