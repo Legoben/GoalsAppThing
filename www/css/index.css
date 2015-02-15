@@ -18,10 +18,8 @@ body {
 }
 
 /* ipads are fucking stupid */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-    body {
-        overflow: hidden;
-    }
+body {
+    overflow: hidden;
 }
 
 /* the fucking navbar */
@@ -42,6 +40,10 @@ nav {
     top: 0; left: 0; bottom: 0; right: 0;
 
     background: rgba(0, 0, 0, 0.70);
+
+    display: none;
+
+    padding: 32px;
 }
 
 .loader .spinner {
@@ -60,7 +62,7 @@ nav {
     vertical-align: middle;
 }
 
-.loader p {
+.loader .spinner .content p {
     color: #fff;
 
     font-family: 'robotobold' !important;
@@ -80,6 +82,10 @@ nav {
                0 20px 20px rgba(0,0,0,.15);
 
     margin-bottom: 5px;
+}
+
+.loader .spinner .content img {
+    height: auto;
 }
 
 /* make the font-related markup tags actually work */
