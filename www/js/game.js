@@ -8,6 +8,8 @@ function getUrlVars() {
 
 // Determine if this is a new game or should be resumed
 var gid = null;
+
+// !!!
 if(getUrlVars()['rid'] != ''){
     gid = getUrlVars()['rid'];
     $(".game .game-id").html(gid);
@@ -22,6 +24,7 @@ if(getUrlVars()['rid'] != ''){
     var ws = new WebSocket("ws://" + window.config.apiUrl + "/ws");
 }
 
+// List of players and this player's ID
 var players = [];
 var myid = null;
 
@@ -132,8 +135,8 @@ function locationUpdated(position) {
 
     // Update the debug information
     $(".game #debug-pos").html("(" + position.coords.latitude + ", " + position.coords.longitude + ")");
-    $(".game #debug-altitude").html(position.coords.altitude + " m");
-    $(".game #debug-accuracy").html(position.coords.accuracy + " m");
+    $(".game #debug-altitude").html(Math.round(position.coords.altitude) + " m");
+    $(".game #debug-accuracy").html(Math.round(position.coords.accuracy) + " m");
 
     // hide the alert, if it's visible
     $(".game .alert-location-invalid").fadeOut(window.config.fadeLength);
