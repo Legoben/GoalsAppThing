@@ -1,14 +1,4 @@
 /**
- * App config
- */
-window.config = {
-    api: "http://ping.ngrok.com/",
-
-    fadeLength: 256,
-    slideToggleLength: 333
-};
-
-/**
  * Initialiser
  */
 $(document).ready(function() {

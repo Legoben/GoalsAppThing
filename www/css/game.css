@@ -16,6 +16,5 @@
 
 /* game id */
 .game .game-id {
-	font-size: 13px;
-	color: #444;
+	font-family: 'Monaco', 'Menlo', 'Courier', fixed-width;
 }

@@ -6,50 +6,52 @@ function getUrlVars() {
 	return vars;
 }
 
+// Determine if this is a new game or should be resumed
 var gid = null;
 if(getUrlVars()['rid'] != ''){
     gid = getUrlVars()['rid'];
     $(".game .game-id").html(gid);
     $(".game #debug-gid").html(gid);
 
-    var ws = new WebSocket("ws://ping.ngrok.com/ws?id="+gid);
+    // Connect the websocket
+    var ws = new WebSocket("ws://" + window.config.apiUrl + "/ws?id=" + gid);
+
+    // Update URL with game ID
+    history.replaceState("game.html?rid=" + gid);
 } else {
-    var ws = new WebSocket("ws://ping.ngrok.com/ws");
+    var ws = new WebSocket("ws://" + window.config.apiUrl + "/ws");
 }
-var players = []
+
+var players = [];
 var myid = null;
 
 // message handler
 ws.onmessage = function (event) {
-    var j = JSON.parse(event.data)
-    console.log(j)
+    var j = JSON.parse(event.data);
+    console.log(j);
     
-    var e = j.event
+    var e = j.event;
     
-    
-    if(e == "dopong"){
-        
-        
-    } else if(e == "youjoin"){
-        console.log("HERE")
-        //Do Thing
+    if(e == "dopong") {
+        // Do Thing
         myid = j.data.youid;
         players = j.data.players;
         gid = j.data.gameid;
 
+        // Update the history
+        history.replaceState("game.html?rid=" + gid);
+
         // update game id
         $(".game .game-id").html(gid);
         $(".game #debug-gid").html(gid);
-        
-        console.log("You're in!");
 
         // update list
         updatePlayerList();       
-    } else if(e == "playerjoin"){
+    } else if(e == "playerjoin") {
         players.push(j.data);
 
         // update list
-        updatePlayerList();   
+        updatePlayerList();
     }
 }
 
@@ -114,8 +116,8 @@ function locationUpdated(position) {
 
     // Update the debug information
     $(".game #debug-pos").html("(" + position.coords.latitude + ", " + position.coords.longitude + ")");
-    $(".game #debug-altitude").html(position.coords.altitude + "m");
-    $(".game #debug-accuracy").html(position.coords.accuracy + "m");
+    $(".game #debug-altitude").html(position.coords.altitude + " m");
+    $(".game #debug-accuracy").html(position.coords.accuracy + " m");
 
     // hide the alert, if it's visible
     $(".game .alert-location-invalid").fadeOut(window.config.fadeLength);
