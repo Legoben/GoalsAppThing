@@ -66,11 +66,11 @@ function playPong(distance, callback) {
     // plox
     var audio = document.createElement('audio');
 
-    if (!window.divice) {
+    if (!window.cordova) {
         a = new Audio(audioFiles[potato][index])
         a.play()
-    }else if (device.platform == 'Android') {
-        playAudio('http://ping.helloben.co/' + audioFiles[potato][index])
+    }else if (cordova.platformId == 'android') {
+        playAudio(audioFiles[potato][index])
     } else {
         a = new Audio(audioFiles[potato][index])
         a.play()
